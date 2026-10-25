@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f4f6f2" />
+    <title>Swim Lab — аналитика плавания</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#top" aria-label="Swim Lab — главная">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span>SWIM<span class="brand-light">LAB</span></span>
+        </a>
+        <nav class="main-nav" aria-label="Основная навигация">
+          <a class="active" href="#overview">Обзор</a>
+          <a href="#sessions">Тренировки</a>
+          <a href="#insights">Наблюдения</a>
+        </nav>
+        <div class="topbar-right">
+          <span class="local-badge"><span class="status-dot"></span> Локальные данные</span>
+          <button class="button button-dark button-small" id="top-import">+ Импорт</button>
+        </div>
+      </header>
+
+      <main id="top">
+        <section class="hero" id="overview">
+          <div>
+            <div class="eyebrow"><span class="eyebrow-line"></span> ТВОЯ ТРЕНИРОВОЧНАЯ ЛАБОРАТОРИЯ</div>
+            <h1>Каждый метр<br /><em>имеет значение.</em></h1>
+            <p class="hero-copy">Плавание в цифрах: замечай прогресс, изучай ритм и лучше понимай свои тренировки.</p>
+          </div>
+          <div class="hero-aside">
+            <div class="hero-aside-label">ПОСЛЕДНЯЯ ТРЕНИРОВКА</div>
+            <div class="hero-aside-value" id="hero-last-distance">—</div>
+            <div class="hero-aside-sub" id="hero-last-date">Импортируй данные Apple Health</div>
+            <div class="hero-watermark" aria-hidden="true">〰</div>
+          </div>
+        </section>
+
+        <section class="metric-grid" aria-label="Общая статистика">
+          <article class="metric-card metric-card-featured">
+            <div class="metric-label">ТРЕНИРОВКИ <span class="metric-icon">↗</span></div>
+            <div class="metric-value" id="metric-sessions">—</div>
+            <div class="metric-foot" id="metric-sessions-foot">Всего сессий</div>
+          </article>
+          <article class="metric-card">
+            <div class="metric-label">ОБЩАЯ ДИСТАНЦИЯ <span class="metric-icon aqua">≈</span></div>
+            <div class="metric-value" id="metric-distance">—</div>
+            <div class="metric-foot">метров проплыто</div>
+          </article>
+          <article class="metric-card">
+            <div class="metric-label">СРЕДНИЙ ТЕМП <span class="metric-icon coral">◷</span></div>
+            <div class="metric-value" id="metric-pace">—</div>
+            <div class="metric-foot">на 100 м, с учётом пауз</div>
+          </article>
+          <article class="metric-card">
+            <div class="metric-label">СРЕДНИЙ ПУЛЬС <span class="metric-icon lilac">♥</span></div>
+            <div class="metric-value" id="metric-heart">—</div>
+            <div class="metric-foot">ударов в минуту</div>
+          </article>
+        </section>
+
+        <section class="content-grid top-content">
+          <article class="panel volume-panel">
+            <div class="panel-heading">
+              <div><div class="panel-kicker">РИТМ ТРЕНИРОВОК</div><h2>Недельный объём</h2></div>
+              <span class="panel-note" id="week-summary">Дистанция по неделям</span>
+            </div>
+            <div class="chart-legend"><span class="legend-dot"></span> Проплыто, м</div>
+            <div class="chart-wrap" id="weekly-chart"><div class="chart-empty">Здесь появится график объёма</div></div>
+          </article>
+          <article class="panel latest-panel">
+            <div class="panel-heading">
+              <div><div class="panel-kicker">СЕССИЯ</div><h2>Последний заплыв</h2></div>
+              <span class="round-icon">↗</span>
+            </div>
+            <div class="latest-date" id="latest-date">—</div>
+            <div class="latest-distance-row"><span class="latest-distance" id="latest-distance">—</span><span class="latest-unit">метров</span></div>
+            <div class="latest-divider"></div>
+            <div class="mini-metrics">
+              <div><span>Темп / 100 м</span><strong id="latest-pace">—</strong></div>
+              <div><span>Темп в движении</span><strong id="latest-moving-pace">—</strong></div>
+              <div><span>Длительность</span><strong id="latest-duration">—</strong></div>
+              <div><span>Пульс</span><strong id="latest-heart">—</strong></div>
+              <div><span>Гребки / длина</span><strong id="latest-strokes">—</strong></div>
+              <div><span>SWOLF</span><strong id="latest-swolf">—</strong></div>
+            </div>
+            <div class="latest-footnote" id="latest-footnote">Темп по всей сессии может включать отдых.</div>
+          </article>
+        </section>
+
+        <section class="content-grid lower-content">
+          <article class="panel split-panel">
+            <div class="panel-heading">
+              <div><div class="panel-kicker">ТЕХНИКА И РИТМ</div><h2>Отрезки по длинам</h2></div>
+              <span class="panel-note" id="split-caption">Время на длину бассейна</span>
+            </div>
+            <div class="split-chart" id="split-chart"><div class="chart-empty">После импорта здесь будут отрезки</div></div>
+            <div class="split-footer"><span><i class="legend-line"></i> Секунд на длину</span><span id="split-range">—</span></div>
+          </article>
+          <article class="panel insight-panel" id="insights">
+            <div class="panel-heading">
+              <div><div class="panel-kicker">ЧТО ЗАМЕТНО</div><h2>Наблюдения</h2></div>
+              <span class="sparkle">✳</span>
+            </div>
+            <div class="insight-list" id="insight-list"><div class="insight-placeholder">После первой тренировки здесь появятся наблюдения.</div></div>
+            <div class="insight-disclaimer">Это описательные подсказки по данным, а не оценка здоровья или техники.</div>
+          </article>
+        </section>
+
+        <section class="panel sessions-panel" id="sessions">
+          <div class="panel-heading sessions-heading">
+            <div><div class="panel-kicker">ИСТОРИЯ</div><h2>Тренировки</h2></div>
+            <span class="panel-note" id="history-count">Пока пусто</span>
+          </div>
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>ДАТА</th><th>ДИСТАНЦИЯ</th><th>ВРЕМЯ</th><th>ТЕМП / 100 М</th><th>СРЕДНИЙ ПУЛЬС</th><th>ГРЕБКИ</th></tr></thead>
+              <tbody id="session-rows"><tr class="empty-row"><td colspan="6">Импортируй экспорт Apple Health, чтобы увидеть историю.</td></tr></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="import-section" id="import-section">
+          <div class="import-copy">
+            <div class="panel-kicker">ОБНОВИТЬ ДАННЫЕ</div>
+            <h2>Новый заплыв?<br /><em>Добавь его сюда.</em></h2>
+            <p>Выбери ZIP-архив экспорта Apple Health или файл <code>export.xml</code>. Мы импортируем только плавательные тренировки и связанные показатели.</p>
+            <div class="privacy-note"><span class="lock-icon">⌑</span> Файл обрабатывается локально и не сохраняется целиком.</div>
+          </div>
+          <button class="upload-card" id="drop-zone" type="button">
+            <span class="upload-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M5 15v4h14v-4" /></svg></span>
+            <strong id="upload-title">Перетащи файл сюда</strong>
+            <span id="upload-subtitle">или нажми, чтобы выбрать ZIP / XML</span>
+            <span class="button button-dark upload-button">Выбрать файл <span>↗</span></span>
+          </button>
+          <input id="file-input" type="file" accept=".zip,.xml,application/zip,text/xml,application/xml" hidden />
+        </section>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+      </main>
+
+      <footer class="footer"><a class="brand footer-brand" href="#top"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>SWIM<span class="brand-light">LAB</span></span></a><span>Твой прогресс — в твоих руках.</span><a href="/docs" target="_blank" rel="noreferrer">API-документация ↗</a></footer>
+    </div>
+    <script src="/static/app.js" defer></script>
+  </body>
+</html>
